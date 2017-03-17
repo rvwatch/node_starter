@@ -1,10 +1,10 @@
 Node/Express project starter
 
-Passport for auth
-Sequelize as ORM
+Passport for auth + Sequelize as ORM
 
-You'll want a config.json with some sensitive stuff.  It's ignored by .gitignore:
+You'll want a config.json in server/ with some sensitive stuff:  (It's ignored by .gitignore)
 
+```javascript
 {
   "development": {
     "username": "",
@@ -13,7 +13,7 @@ You'll want a config.json with some sensitive stuff.  It's ignored by .gitignore
     "host": "127.0.0.1",
     "port": "5432",
     "dialect": "postgres",
-    "seederStorage": "node_starter"
+    "seederStorage": "sequelize"
   },
   "test": {
     "username": "",
@@ -31,4 +31,4 @@ You'll want a config.json with some sensitive stuff.  It's ignored by .gitignore
     "port": "5432",
     "dialect": "postgres"
   }
-}
+}```
