@@ -1,12 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var serveFavicon = require('serve-favicon');
 var session = require('express-session');
 var flash = require('express-flash');
 var expressValidator = require('express-validator');
-var multer = require('multer');
 var passport = require('passport');
+
+var multer = require('multer');
+var serveFavicon = require('serve-favicon');
 
 //initialize express
 var app = express();

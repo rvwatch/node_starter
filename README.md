@@ -31,4 +31,5 @@ You'll want a config.json in server/ with some sensitive stuff:  (It's ignored b
     "port": "5432",
     "dialect": "postgres"
   }
-}```
+}
+```
