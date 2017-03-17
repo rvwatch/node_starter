@@ -29,7 +29,7 @@ var morgan = require('morgan');
 app.use(morgan("combined", {
     "stream": {
         write: function (str) {
-            log.debug(str);
+            app.get('logger').debug(str);
         }
     }
 }));
