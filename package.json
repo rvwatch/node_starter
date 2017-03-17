@@ -1,0 +1,44 @@
+{
+  "name": "planneriffic",
+  "version": "0.0.1",
+  "description": "planner REST API",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rickdarlington/planneriffic.git"
+  },
+  "author": "Rick Darlington",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rickdarlington/planneriffic/issues"
+  },
+  "homepage": "https://planneriffic.com",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.1",
+    "express-validator": "^3.1.2",
+    "mocha": "^3.2.0",
+    "morgan": "^1.8.1",
+    "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.1.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.2",
+    "sequelize-cli": "^2.5.1",
+    "serve-favicon": "^2.4.1",
+    "supertest": "^3.0.0",
+    "supervisor": "^0.12.0"
+  },
+  "scripts": {
+    "start": "supervisor ./bin/www",
+    "db": "node_modules/.bin/sequelize",
+    "createdb": "node_modules/.bin/sequelize db:migrate && node_modules/.bin/sequelize db:seed:all",
+    "killdb": "node_modules/.bin/sequelize db:seed:undo:all && node_modules/.bin/sequelize db:migrate:undo:all",
+    "test": "mocha"
+  }
+}
