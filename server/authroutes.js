@@ -1,6 +1,7 @@
 module.exports = function (app, passport) {
+    var log = app.get('logger');
+
     function logRoute(req, res, next) {
-        console.log(`${req.body.email}`);
         next();
     }
 

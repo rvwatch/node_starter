@@ -1,8 +1,10 @@
 var express = require('express');
 
 module.exports = function (app, passport) {
+    var log = app.get('logger');
+
     function logRoute(req, res, next) {
-        console.log(`${req}`);
+        log.info(`${req}`);
         next();
     }
 

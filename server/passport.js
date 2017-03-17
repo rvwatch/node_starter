@@ -1,8 +1,11 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt");
 
-module.exports = function (app, models, passport) {
+module.exports = function (app, passport) {
     var pool = app.get('pool');
+    var log = app.get('logger');
+
+    var models = require('./models/')(app);
 
     passport.serializeUser(function (user, done) {
         done(null, user.id);
@@ -27,14 +30,14 @@ module.exports = function (app, models, passport) {
                 }
             }).then(function (user) {
                 if (!user) {
-                    console.log(`${email} tried to log in, we don't know them.`);
+                    log.info(`${email} tried to log in, we don't know them.`);
                     //more descriptive or more "secure"
                     return done(null, false, {message: 'Wrong user name or password!'});
                 }
                 else {
                     bcrypt.compare(password, user.password).then(function(res) {
                          if(res){
-                             console.log(`${user.name} (${user.id} ) logged in.`);
+                             log.info(`${user.name} (${user.id}) logged in.`);
                              return done(null, user);
                          }
                          else {
