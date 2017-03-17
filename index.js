@@ -45,7 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routing
-require('./server/routes.js')(app, passport);
-require('./server/authroutes.js')(app, passport);
+require('./server/routing/routes.js')(app, passport);
+require('./server/routing/routes-authed.js')(app, passport);
 
 module.exports = app;

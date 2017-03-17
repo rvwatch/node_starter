@@ -1,9 +1,7 @@
+var express = require('express');
+
 module.exports = function (app, passport) {
     var log = app.get('logger');
-
-    function logRoute(req, res, next) {
-        next();
-    }
 
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('error')});
@@ -14,12 +12,7 @@ module.exports = function (app, passport) {
         res.redirect('/');
     });
 
-    app.post('/login',
-        [logRoute],
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
-        })
-    );
+    app.get('/', function (req, res) {
+        res.render('index');
+    });
 };

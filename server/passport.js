@@ -8,10 +8,12 @@ module.exports = function (app, passport) {
     var models = require('./models/')(app);
 
     passport.serializeUser(function (user, done) {
+        log.debug(`serialize user: ${user.id}`)
         done(null, user.id);
     });
 
     passport.deserializeUser(function (id, done) {
+        log.debug(`deserialize user: ${id}`)
         models.User.findById(id)
             .then(function (user) {
                 done(null, user);
@@ -24,6 +26,7 @@ module.exports = function (app, passport) {
             passReqToCallback: true
         },
         function (req, email, password, done) {
+            log.debug("local login request");
             models.User.findOne({
                 where: {
                     email: email
