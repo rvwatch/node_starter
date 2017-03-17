@@ -8,10 +8,8 @@ var expressValidator = require('express-validator');
 var multer = require('multer');
 var passport = require('passport');
 
-
 //initialize express
 var app = express();
-
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,14 +20,9 @@ app.set('view engine', 'ejs');
 
 //set up log4j
 var log4js = require('log4js');
-log4js.configure({
-    appenders: [
-        {type: 'console'},
-    ]
-});
+log4js.configure({appenders: [{type: 'console'},]});
 app.set('logger', log4js.getLogger());
-var log = app.get('logger');
-log.info("log4js configured");
+app.get('logger').info("log4js configured");
 
 //redirect morgan logs to log4js.debug
 var morgan = require('morgan');
@@ -42,9 +35,7 @@ app.use(morgan("combined", {
 }));
 
 //initialize postgres
-var pg = require('pg');
-var pool = require('./server/dbconfig.js')(app, pg)
-app.set('pool', pool)
+require('./server/dbconfig.js')(app);
 
 //set up passport
 require('./server/passport.js')(app, passport);
