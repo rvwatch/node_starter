@@ -5,21 +5,25 @@ module.exports = function (app) {
         if (req.isAuthenticated()) {
             return next();
         }
+        req.flash('info', "You need to log in to do that.");
         res.redirect('/');
     }
 
     app.get('/logout',
         isLoggedIn,
-        function(req, res) {
+        function (req, res) {
+            res.cookie("sid", "", { expires: new Date(1) });
             app.get('sessionStore').destroy(req.sessionID);
-            res.clearCookie('sid', {path: '/'});
-            res.redirect('/');
+
+            //don't just redirect here, causes cookie to not get cleared
+            req.flash('info', "You've logged out.");
+            res.render('index', {message: req.flash('info')});
         }
     );
 
     app.get('/profile',
         isLoggedIn,
-        function(req, res) {
+        function (req, res) {
             res.render('profile', {
                 user: req.user
             });

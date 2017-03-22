@@ -26,6 +26,6 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('index', {message: req.flash('info')});
     });
 };
