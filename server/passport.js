@@ -1,5 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt");
+var bodyParser = require('body-parser')
 
 module.exports = function (app, passport) {
     var pool = app.get('pool');
@@ -38,16 +39,53 @@ module.exports = function (app, passport) {
                     return done(null, false, {message: 'Wrong user name or password!'});
                 }
                 else {
-                    bcrypt.compare(password, user.password).then(function(res) {
-                         if(res){
-                             log.info(`${user.name} (${user.id}) logged in.`);
-                             return done(null, user);
-                         }
-                         else {
-                             return done(null, false, {message: 'Wrong user name or password!'});
-                         }
+                    bcrypt.compare(password, user.password).then(function (res) {
+                        if (res) {
+                            log.info(`${user.name} (${user.id}) logged in.`);
+                            return done(null, user);
+                        }
+                        else {
+                            return done(null, false, {message: 'Wrong user name or password!'});
+                        }
                     });
                 }
             });
         }));
+
+    passport.use('local-signup', new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
+        function (req, email, password, done) {
+            //validate
+            if(!email) {
+                return done(null, false, req.flash('error', 'Email is required.'));
+            }
+
+            if(!password) {
+                return done(null, false, req.flash('error', 'Password is required.'));
+            }
+
+            if(!req.body.name || req.body.name == null || req.body.name == "") {
+                return done(null, false, req.flash('error', 'Name is required.'));
+            }
+
+            models.User.findOne({
+                where: {
+                    email: email
+                }
+            }).then(function (user) {
+                if (user) {
+                    return done(null, false, req.flash('error', 'That email is already taken.'));
+                } else {
+                    models.User
+                        .findOrCreate({where: {name: req.body.name, email: email, password: models.User.hash(password)}})
+                        .spread(function(user, created) {
+                            log.info(`${email} registered`);
+                            done(null, user);
+                        });
+                }
+            });
+    }));
 };

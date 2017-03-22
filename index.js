@@ -1,11 +1,12 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
 var flash = require('express-flash');
 var expressValidator = require('express-validator');
 var passport = require('passport');
+var session = require('express-session');
 
+//future
 var multer = require('multer');
 var serveFavicon = require('serve-favicon');
 
@@ -25,7 +26,7 @@ log4js.configure({appenders: [{type: 'console'},]});
 app.set('logger', log4js.getLogger());
 app.get('logger').info("log4js configured");
 
-//redirect morgan logs to log4js.debug
+//redirect morgan to log4js.debug
 var morgan = require('morgan');
 app.use(morgan("combined", {
     "stream": {
@@ -35,7 +36,7 @@ app.use(morgan("combined", {
     }
 }));
 
-//initialize postgres
+//initialize db connection string (using sequelize now)
 require('./server/dbconfig.js')(app);
 
 //set up passport

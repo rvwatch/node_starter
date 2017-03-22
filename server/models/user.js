@@ -7,20 +7,19 @@ module.exports = function (sequelize, DataTypes) {
         password: DataTypes.STRING
     }, {
         instanceMethods: {
-            generateHash: function (password) {
-                bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-                    // Store hash in your password DB.
-                });
-
-                return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-            },
             validPassword: function (password) {
                 return bcrypt.compareSync(password, this.password);
-            },
+            }
         },
         classMethods: {
             associate: function (models) {
                 // associations can be defined here
+            },
+            hash: function (password) {
+                bcrypt.hash(password, 8, function(err, hash) {
+                });
+
+                return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
             }
         }
     });
