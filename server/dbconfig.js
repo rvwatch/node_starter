@@ -1,7 +1,5 @@
 module.exports = function (app) {
-    var env = process.env.NODE_ENV || 'development';
-    var config = require(__dirname + '/../server/config.json')[env];
-
+    var config = app.get('config');
     app.set('dbstring', `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`);
     app.set('redisUrl', `redis://${config.redis.host}:${config.redis.port}`);
 };

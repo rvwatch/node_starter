@@ -12,7 +12,7 @@ module.exports = function (app) {
     var sess = {
         name: 'sid',
         store: app.get('sessionStore'),
-        secret: 'ahsfd07yaysjo8v76asbdfbiosa12#!@',
+        secret: app.get('config').secret,
         cookie: {
             path: '/',
             httpOnly: true,

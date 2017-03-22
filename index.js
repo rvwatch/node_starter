@@ -12,13 +12,15 @@ var serveFavicon = require('serve-favicon');
 
 //initialize express
 var app = express();
+app.set('env', process.env.NODE_ENV || 'development');
+app.set('config', require(__dirname + '/server/config.json')[app.get('env')]);
+app.set('views', './client/views');
+app.set('view engine', 'ejs');
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(flash());
-app.set('views', './client/views');
-app.set('view engine', 'ejs');
 
 //set up log4j
 var log4js = require('log4js');
@@ -36,7 +38,7 @@ app.use(morgan("combined", {
     }
 }));
 
-//initialize db connection string (using sequelize now)
+//initialize db connection strings only
 require('./server/dbconfig.js')(app);
 
 //set up passport
