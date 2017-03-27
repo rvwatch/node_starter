@@ -4,7 +4,9 @@ module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define('User', {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
-        password: DataTypes.STRING
+        password: DataTypes.STRING,
+        resetToken: DataTypes.STRING,
+        resetTokenExpires: DataTypes.DATE
     }, {
         instanceMethods: {
             validPassword: function (password) {

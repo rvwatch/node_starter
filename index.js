@@ -24,7 +24,7 @@ app.use(flash());
 
 //set up log4j
 var log4js = require('log4js');
-log4js.configure({appenders: [{type: 'console'},]});
+log4js.configure({appenders: [{type: 'console'}, ], replaceConsole: true});
 app.set('logger', log4js.getLogger());
 app.get('logger').info("log4js configured");
 
@@ -48,7 +48,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routing
-require('./server/routing/routes.js')(app, passport);
+require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
+require('./server/routing/routes.js')(app, passport);
 
 module.exports = app;

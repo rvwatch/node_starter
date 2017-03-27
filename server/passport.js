@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 module.exports = function (app, passport) {
     var pool = app.get('pool');

@@ -9,13 +9,24 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             name: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             email: {
+                allowNull: false,
                 type: Sequelize.STRING
             },
             password: {
+                allowNull: false,
                 type: Sequelize.STRING
+            },
+            resetToken: {
+                allowNull: true,
+                type: Sequelize.STRING
+            },
+            resetTokenExpires: {
+                allowNull: true,
+                type: Sequelize.DATE
             },
             createdAt: {
                 allowNull: false,

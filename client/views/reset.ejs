@@ -1,0 +1,21 @@
+<% if (message.length > 0) { %>
+    <%= message %>
+<% } %>
+
+<form action="/reset" method="POST">
+    <div>
+        <label>New Password:</label>
+        <input type="password" name="newPassword" value=""/>
+    </div>
+    <div>
+        <label>Confirm Password:</label>
+        <input type="password" name="confirmPassword" value=""/>
+    </div>
+    <div>
+        <input type="hidden" name="token" value="<%= token %>"/>
+        <input type="submit" value="Reset Password"/>
+    </div>
+</form>
+
+<br />
+<a href="/">home</a>

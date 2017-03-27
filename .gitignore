@@ -1,5 +1,7 @@
-#intellij
+dintellij
 .idea
+
+dump.rdb
 
 #ignore sensitive config
 config.json
