@@ -1,7 +1,7 @@
-<% if (info && (info.length > 0)) { %>
+<% if (req.flash('info') && (req.flash('info') > 0)) { %>
   <div class="alert alert-info"><%= info %></div>
 <% } %>
 
-<% if (error && (error.length > 0)) { %>
+<% if (req.flash('error') && (req.flash('error') > 0)) { %>
   <div class="alert alert-error"><%= error %></div>
 <% } %>

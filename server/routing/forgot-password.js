@@ -144,8 +144,7 @@ module.exports = function (app, passport) {
             res.render('reset', {
                 user: req.user,
                 token: req.params.token,
-                info: req.flash('info'),
-                error: req.flash('error')
+                req:req
             });
         });
     });
@@ -153,7 +152,8 @@ module.exports = function (app, passport) {
     app.get('/forgot', function(req, res) {
         res.render('forgot', {
             info: req.flash('info'),
-            error: req.flash('error')
+            error: req.flash('error'),
+            req:req
         });
     });
 };

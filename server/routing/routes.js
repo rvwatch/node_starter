@@ -7,10 +7,7 @@ module.exports = function (app, passport) {
     var models = require('../models/')(app);
 
     app.get('/login', function (req, res) {
-        res.render('login', {
-            info: req.flash('info'),
-            error: req.flash('error')
-        });
+        res.render('login', {req:req});
     });
 
     app.post('/login',
@@ -22,10 +19,7 @@ module.exports = function (app, passport) {
     );
 
     app.get('/signup', function (req, res) {
-        res.render('signup', {
-            info: req.flash('info'),
-            error: req.flash('error')
-        });
+        res.render('signup', {req:req});
     });
 
     app.post('/signup', passport.authenticate('local-signup', {
@@ -35,10 +29,7 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/', function (req, res) {
-        res.render('index', {
-            info: req.flash('info'),
-            error: req.flash('error')
-        });
+        res.render('index', {req:req});
     });
 
 };

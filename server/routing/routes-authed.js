@@ -32,8 +32,7 @@ module.exports = function (app) {
         isLoggedIn,
         function (req, res) {
             res.render('profile', {
-                info: req.flash('info'),
-                error: req.flash('error'),
+                req:req,
                 user: req.user
             });
         }
