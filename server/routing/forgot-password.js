@@ -38,7 +38,7 @@ module.exports = function (app, passport) {
                     }).catch(function(err) {
                         log.error(`Password reset for ${user.email} FAILED!`);
                         log.error(err);
-                        req.flash('info', 'Something went wrong, please try again later.');
+                        req.flash('error', 'Something went wrong, please try again later.');
                         return res.redirect('/forgot');
                     })
 
@@ -85,13 +85,17 @@ module.exports = function (app, passport) {
                     }
                 }).then(function (user) {
                     if (!user) {
-                        req.flash('info', 'Password reset token is invalid or has expired.');
+                        req.flash('error', 'Password reset token is invalid or has expired.');
                         return res.redirect('/forgot');
                     }
 
                     if(req.body.newPassword != req.body.confirmPassword) {
-                        req.flash('info', 'Passwords must match!');
-                        res.render('reset', {token: req.body.token, message: req.flash('info')});
+                        req.flash('error', 'Passwords must match!');
+                        res.render('reset', {
+                            token: req.body.token,
+                            info: req.flash('info'),
+                            error: req.flash('error')
+                        });
                         return;
                     }
 
@@ -134,18 +138,22 @@ module.exports = function (app, passport) {
             resetTokenExpires:  { $gt: Date.now() }
         }).then(function (user) {
             if (!user) {
-                req.flash('info', 'Password reset token is invalid or has expired.');
+                req.flash('error', 'Password reset token is invalid or has expired.');
                 return res.redirect('/forgot');
             }
             res.render('reset', {
                 user: req.user,
                 token: req.params.token,
-                message: req.flash('info')
+                info: req.flash('info'),
+                error: req.flash('error')
             });
         });
     });
 
     app.get('/forgot', function(req, res) {
-        res.render('forgot', {message: req.flash('info')});
+        res.render('forgot', {
+            info: req.flash('info'),
+            error: req.flash('error')
+        });
     });
 };
