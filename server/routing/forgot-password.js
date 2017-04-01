@@ -143,17 +143,12 @@ module.exports = function (app, passport) {
             }
             res.render('reset', {
                 user: req.user,
-                token: req.params.token,
-                req:req
+                token: req.params.token
             });
         });
     });
 
     app.get('/forgot', function(req, res) {
-        res.render('forgot', {
-            info: req.flash('info'),
-            error: req.flash('error'),
-            req:req
-        });
+        res.render('forgot');
     });
 };

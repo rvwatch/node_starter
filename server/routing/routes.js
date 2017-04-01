@@ -6,9 +6,21 @@ module.exports = function (app, passport) {
     var config = app.get('config');
     var models = require('../models/')(app);
 
-    app.get('/login', function (req, res) {
-        res.render('login', {req:req});
-    });
+    function redirectIfAuthed(req, res, next) {
+        if (req.isAuthenticated()) {
+            res.redirect('/profile');
+        }
+        else {
+            return next();
+        }
+    }
+
+    app.get('/login',
+        redirectIfAuthed,
+        function(req, res) {
+            res.render('login');
+        }
+    );
 
     app.post('/login',
         passport.authenticate('local', {
@@ -18,9 +30,12 @@ module.exports = function (app, passport) {
         })
     );
 
-    app.get('/signup', function (req, res) {
-        res.render('signup', {req:req});
-    });
+    app.get('/signup',
+        redirectIfAuthed,
+        function (req, res) {
+            res.render('signup');
+        }
+    );
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect : '/profile',
@@ -29,7 +44,7 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/', function (req, res) {
-        res.render('index', {req:req});
+        res.render('index');
     });
 
 };

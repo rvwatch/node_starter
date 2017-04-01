@@ -9,10 +9,6 @@ module.exports = function (app) {
         res.redirect('/');
     }
 
-    function setFlash(req, res, next) {
-
-    }
-
     app.get('/logout',
         isLoggedIn,
         function (req, res) {
@@ -21,10 +17,7 @@ module.exports = function (app) {
 
             //don't just redirect here, causes cookie to not get cleared
             req.flash('info', "You've logged out.");
-            res.render('index', {
-                info: req.flash('info'),
-                error: req.flash('error')
-            });
+            res.render('index');
         }
     );
 
@@ -32,7 +25,6 @@ module.exports = function (app) {
         isLoggedIn,
         function (req, res) {
             res.render('profile', {
-                req:req,
                 user: req.user
             });
         }
