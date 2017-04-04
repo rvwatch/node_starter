@@ -1,4 +1,4 @@
-<% include partials/flash %>
+<%- include('partials/header'); %>
 
 <% if(user) { %>
     hi <%= user.name %>!  you're logged in!
@@ -7,3 +7,4 @@
 <a href="/">home</a>
 <br />
 <a href="/logout">log out</a>
+<%- include('partials/footer'); %>

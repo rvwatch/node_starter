@@ -1,10 +1,13 @@
-<% include partials/flash %>
-hi!  it's a thing!
+<%- include('partials/header', {req: req}); %>
+
+hi!  it's a thing!  Here's some stuff you can do:
 <br />
 <a href="/login">login</a>
 <br />
 <a href="/signup">sign up</a>
 <br />
-<a href="/profile">profile</a>
+<a href="/profile">my profile</a>
 <br />
-<a href="/forgot">forgot</a>
+<a href="/forgot">forgot password</a>
+
+<%- include('partials/footer'); %>

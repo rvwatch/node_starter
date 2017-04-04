@@ -1,3 +1,4 @@
+//TODO should change to router to avoid 'isLoggedIn' call in every chain
 module.exports = function (app) {
     var log = app.get('logger');
 
@@ -14,6 +15,7 @@ module.exports = function (app) {
         function (req, res) {
             res.cookie("sid", "", { expires: new Date(1) });
             app.get('sessionStore').destroy(req.sessionID);
+            req.logout();
 
             //don't just redirect here, causes cookie to not get cleared
             req.flash('info', "You've logged out.");

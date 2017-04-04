@@ -47,6 +47,15 @@ app.use(session(require('./server/sessions.js')(app)));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//static includes
+app.use(express.static(__dirname + '/public'));
+
+//pass request object to all templates
+app.use(function(req, res, next) {
+    res.locals.req = req;
+    next();
+});
+
 //routing
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);

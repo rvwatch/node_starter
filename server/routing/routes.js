@@ -8,6 +8,7 @@ module.exports = function (app, passport) {
 
     function redirectIfAuthed(req, res, next) {
         if (req.isAuthenticated()) {
+            req.flash('info', "Welcome back!");
             res.redirect('/profile');
         }
         else {
@@ -44,7 +45,7 @@ module.exports = function (app, passport) {
     }));
 
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('index', {req: req});
     });
 
 };
