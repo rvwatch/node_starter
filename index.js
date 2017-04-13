@@ -60,5 +60,7 @@ app.use(function(req, res, next) {
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
 require('./server/routing/routes.js')(app, passport);
+require('./server/routing/api/v1.js')(app, passport);
+
 
 module.exports = app;

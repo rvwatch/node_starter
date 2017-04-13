@@ -12,6 +12,14 @@ module.exports = function (sequelize, DataTypes) {
         instanceMethods: {
             validPassword: function (password) {
                 return bcrypt.compareSync(password, this.password);
+            },
+            sanitize: function () {
+                var data = this.get();
+                delete data.id;
+                delete data.password;
+                delete data.resetToken;
+                delete data.resetTokenExpires;
+                return data;
             }
         },
         classMethods: {
