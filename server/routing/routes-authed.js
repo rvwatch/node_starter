@@ -10,19 +10,6 @@ module.exports = function (app) {
         res.redirect('/');
     }
 
-    app.get('/logout',
-        isLoggedIn,
-        function (req, res) {
-            res.cookie("sid", "", { expires: new Date(1) });
-            app.get('sessionStore').destroy(req.sessionID);
-            req.logout();
-
-            //don't just redirect here, causes cookie to not get cleared
-            req.flash('info', "You've logged out.");
-            res.render('index');
-        }
-    );
-
     app.get('/profile',
         isLoggedIn,
         function (req, res) {

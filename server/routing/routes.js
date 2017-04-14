@@ -31,6 +31,18 @@ module.exports = function (app, passport) {
         })
     );
 
+    app.get('/logout',
+        function (req, res) {
+            res.cookie("sid", "", { expires: new Date(1) });
+            app.get('sessionStore').destroy(req.sessionID);
+            req.logout();
+
+            //don't just redirect here, causes cookie to not get cleared
+            req.flash('info', "You've logged out.");
+            res.render('index');
+        }
+    );
+
     app.get('/signup',
         redirectIfAuthed,
         function (req, res) {
