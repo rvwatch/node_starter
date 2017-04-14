@@ -137,4 +137,26 @@ describe("basic tests",function(){
                     });
             });
     });
+
+    it("should redirect to profile when hitting signup if already logged in",function(done){
+        server
+            .post("/login")
+            .send({ email: 'dev@', password: '1234' })
+            .expect(302)
+            .catch(function (err) {
+                if (err) { return done(err); }
+            })
+            .then( function(res) {
+                server
+                    .get("/signup")
+                    .expect(302)
+                    .end(function(err,res){
+                        if (err) { return done(err); }
+                        should(res.status).equal(302);
+                        should(res.headers.location).equal("/profile");
+                        should(res.body.error).equal(undefined);
+                        done();
+                    });
+            });
+    });
 });
