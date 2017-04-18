@@ -50,17 +50,22 @@ app.use(passport.session());
 //static includes
 app.use(express.static(__dirname + '/public'));
 
+//include angular 2 client
+app.use(express.static(__dirname + '/dist'));
+
 //pass request object to all templates
 app.use(function(req, res, next) {
     res.locals.req = req;
     next();
 });
 
+//angular 2 app routing (if you want that)
+require('./server/routing/routes-ng2.js')(app, passport);
+
 //routing
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
 require('./server/routing/routes.js')(app, passport);
 require('./server/routing/api/v1.js')(app, passport);
-
 
 module.exports = app;

@@ -56,8 +56,12 @@ module.exports = function (app, passport) {
         failureFlash : true
     }));
 
+    app.get('/home', function (req, res) {
+        res.render('home', {req: req});
+    });
+
     app.get('/', function (req, res) {
-        res.render('index', {req: req});
+        res.render('home', {req: req});
     });
 
 };
