@@ -59,9 +59,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-//angular 2 app routing (if you want that)
-require('./server/routing/routes-ng2.js')(app, passport);
-
 //routing
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
