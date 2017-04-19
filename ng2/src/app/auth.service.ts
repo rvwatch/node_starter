@@ -10,7 +10,7 @@ export class AuthService {
 
   tokenValid() {
     var token = this.cookieService.get('jwt_token');
-    if(token == null) {
+    if (token == null) {
       return false;
     } else {
       var tokenExpired = new JwtHelper().isTokenExpired(token);

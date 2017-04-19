@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {UserinfoService} from "../userinfo.service";
 import {CookieService} from "angular2-cookie/core";
 
@@ -12,7 +12,8 @@ export class UserinfoComponent implements OnInit {
   user: any = [];
   token: any = [];
 
-  constructor(private userInfoService: UserinfoService, private cs: CookieService) { }
+  constructor(private userInfoService: UserinfoService, private cs: CookieService) {
+  }
 
   ngOnInit() {
     this.userInfoService.getUserInfo().subscribe(userInfo => {

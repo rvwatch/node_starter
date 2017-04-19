@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
 
     app.get('/login',
         redirectIfAuthed,
-        function(req, res) {
+        function (req, res) {
             res.render('login');
         }
     );
@@ -28,18 +28,18 @@ module.exports = function (app, passport) {
             failureRedirect: '/login',
             failureFlash: true
         }),
-        function(req, res) {
+        function (req, res) {
             log.debug("login success");
             var date = new Date();
             date.setDate(date.getDate() + config.sessionExpirationDays);
-            res.cookie("jwt_token", req.session.jwtToken, { expires: date });
+            res.cookie("jwt_token", req.session.jwtToken, {expires: date});
             res.redirect('/profile');
         }
     );
 
     app.get('/logout',
         function (req, res) {
-            res.cookie("sid", "", { expires: new Date(1) });
+            res.cookie("sid", "", {expires: new Date(1)});
             app.get('sessionStore').destroy(req.sessionID);
             req.logout();
 
@@ -57,9 +57,9 @@ module.exports = function (app, passport) {
     );
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile',
-        failureRedirect : '/signup',
-        failureFlash : true
+        successRedirect: '/profile',
+        failureRedirect: '/signup',
+        failureFlash: true
     }));
 
     app.get('/', function (req, res) {

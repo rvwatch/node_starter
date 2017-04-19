@@ -5,7 +5,7 @@ module.exports = function (app) {
 
     var transport;
 
-    if(config.mail.transport == "stream") {
+    if (config.mail.transport == "stream") {
         transport = nodemailer.createTransport({
             jsonTransport: true
         });

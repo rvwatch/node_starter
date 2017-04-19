@@ -30,12 +30,12 @@ module.exports = function (app, passport) {
                     }
 
                     user.resetToken = token;
-                    user.resetTokenExpires= Date.now() + 3600000; // 1 hour
+                    user.resetTokenExpires = Date.now() + 3600000; // 1 hour
 
                     user.save()
-                    .then(function(user) {
-                        log.info(`Password reset requested for ${user.email}`);
-                    }).catch(function(err) {
+                        .then(function (user) {
+                            log.info(`Password reset requested for ${user.email}`);
+                        }).catch(function (err) {
                         log.error(`Password reset for ${user.email} FAILED!`);
                         log.error(err);
                         req.flash('error', 'Something went wrong, please try again later.');
@@ -75,13 +75,13 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/reset', function(req, res) {
+    app.post('/reset', function (req, res) {
         async.waterfall([
-            function(done) {
+            function (done) {
                 models.User.findOne({
                     where: {
                         resetToken: req.body.token,
-                        resetTokenExpires:  { $gt: Date.now() }
+                        resetTokenExpires: {$gt: Date.now()}
                     }
                 }).then(function (user) {
                     if (!user) {
@@ -89,7 +89,7 @@ module.exports = function (app, passport) {
                         return res.redirect('/forgot');
                     }
 
-                    if(req.body.newPassword != req.body.confirmPassword) {
+                    if (req.body.newPassword != req.body.confirmPassword) {
                         req.flash('error', 'Passwords must match!');
                         res.render('reset', {
                             token: req.body.token,
@@ -104,38 +104,38 @@ module.exports = function (app, passport) {
                     user.resetPasswordExpires = undefined;
 
                     user.save()
-                        .then(function(user) {
+                        .then(function (user) {
                             log.info(`Updating password for ${user.email}.`);
-                        }).catch(function(err) {
-                            log.error(`Updating password for ${user.email} FAILED!`);
-                            log.error(err);
-                            done(err);
-                        });
+                        }).catch(function (err) {
+                        log.error(`Updating password for ${user.email} FAILED!`);
+                        log.error(err);
+                        done(err);
+                    });
 
                     done(null, user);
                 });
             },
-            function(user, done) {
+            function (user, done) {
                 var mailOptions = {
                     to: user.email,
                     from: config.mail.reset.fromAddress,
                     subject: config.mail.reset.subject,
                     text: `The password for ${user.email} has been updated.  If you did not request this change, please let us know!`
                 };
-                mailer.sendMail(mailOptions, function(err) {
+                mailer.sendMail(mailOptions, function (err) {
                     req.flash('info', 'Success! Your password has been changed.  Please log in again!');
                     done(err);
                 });
             }
-        ], function(err) {
+        ], function (err) {
             res.redirect('/');
         });
     });
 
-    app.get('/reset/:token', function(req, res) {
+    app.get('/reset/:token', function (req, res) {
         models.User.findOne({
             resetToken: req.params.token,
-            resetTokenExpires:  { $gt: Date.now() }
+            resetTokenExpires: {$gt: Date.now()}
         }).then(function (user) {
             if (!user) {
                 req.flash('error', 'Password reset token is invalid or has expired.');
@@ -148,7 +148,7 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.get('/forgot', function(req, res) {
+    app.get('/forgot', function (req, res) {
         res.render('forgot');
     });
 };

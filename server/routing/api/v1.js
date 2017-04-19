@@ -15,7 +15,7 @@ module.exports = function (app, passport) {
     }
 
     app.get('/api/v1/user/:email',
-        passport.authenticate('jwt', { session: false }),
+        passport.authenticate('jwt', {session: false}),
         userMatches,
         function (req, res) {
             models.User.findOne({

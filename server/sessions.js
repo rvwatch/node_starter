@@ -6,11 +6,12 @@ module.exports = function (app) {
     var maxAge = config.sessionExpirationDays * 24 * 60 * 60 * 1000;
 
     app.set('sessionStore', new RedisStore({
-            url: app.get('redisUrl'),
-            disableTTL: true,
-            logErrors: function (str) {
-                app.get('logger').error(str);
-            }}));
+        url: app.get('redisUrl'),
+        disableTTL: true,
+        logErrors: function (str) {
+            app.get('logger').error(str);
+        }
+    }));
 
     var sess = {
         name: 'sid',

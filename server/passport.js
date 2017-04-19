@@ -67,15 +67,15 @@ module.exports = function (app, passport) {
         },
         function (req, email, password, done) {
             //validate
-            if(!email) {
+            if (!email) {
                 return done(null, false, req.flash('error', 'Email is required.'));
             }
 
-            if(!password) {
+            if (!password) {
                 return done(null, false, req.flash('error', 'Password is required.'));
             }
 
-            if(!req.body.name || req.body.name == null || req.body.name == "") {
+            if (!req.body.name || req.body.name == null || req.body.name == "") {
                 return done(null, false, req.flash('error', 'Name is required.'));
             }
 
@@ -88,21 +88,27 @@ module.exports = function (app, passport) {
                     return done(null, false, req.flash('error', 'That email is already taken.'));
                 } else {
                     models.User
-                        .findOrCreate({where: {name: req.body.name, email: email, password: models.User.hash(password)}})
-                        .spread(function(user, created) {
+                        .findOrCreate({
+                            where: {
+                                name: req.body.name,
+                                email: email,
+                                password: models.User.hash(password)
+                            }
+                        })
+                        .spread(function (user, created) {
                             log.info(`${email} registered`);
                             done(null, user);
                         });
                 }
             });
-    }));
+        }));
 
-    passport.use(new JwtStrategy(app.get("jwtOptions"), function(jwt_payload, next) {
+    passport.use(new JwtStrategy(app.get("jwtOptions"), function (jwt_payload, next) {
         log.debug('payload received', jwt_payload);
 
         models.User.findOne({
             where: {
-                id:jwt_payload.id
+                id: jwt_payload.id
             }
         }).then(function (user) {
             if (!user) {
