@@ -25,10 +25,16 @@ module.exports = function (app, passport) {
 
     app.post('/login',
         passport.authenticate('local', {
-            successRedirect: '/profile',
             failureRedirect: '/login',
             failureFlash: true
-        })
+        }),
+        function(req, res) {
+            log.debug("login success");
+            var date = new Date();
+            date.setDate(date.getDate() + 7);
+            res.cookie("jwt_token", req.session.jwtToken, { expires: date });
+            res.redirect('/profile');
+        }
     );
 
     app.get('/logout',

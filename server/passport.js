@@ -44,13 +44,11 @@ module.exports = function (app, passport) {
                     return done(null, false, {message: 'Wrong user name or password!'});
                 }
                 else {
-                    bcrypt.compare(password, user.password).then(function (res) {
-                        if (res) {
+                    bcrypt.compare(password, user.password).then(function (result) {
+                        if (result) {
                             log.info(`${user.name} (${user.id}) logged in.`);
 
                             req.session.jwtToken = jwt.sign({id: user.id}, config.jwtSecret);
-
-                            log.debug(`jwt token: ${req.session.jwtToken}`);
 
                             return done(null, user);
                         }
@@ -108,10 +106,10 @@ module.exports = function (app, passport) {
             }
         }).then(function (user) {
             if (!user) {
-                log.debug(`jwt failed for user: ${user}`);
+                log.debug(`jwt failed for user: ${user.email}`);
                 next(null, false);
             } else {
-                log.debug(`jwt success for user: ${user}`);
+                log.debug(`jwt success for user: ${user.email}`);
                 next(null, user);
             }
         });
