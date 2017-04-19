@@ -12,12 +12,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, cook
   }), http, options);
 }
 
-export function jwtValid(cookies: CookieService) {
-  var token = cookies.get('jwt_token');
-
-  return new JwtHelper().isTokenExpired(token);
-}
-
 @NgModule({
   providers: [
     {

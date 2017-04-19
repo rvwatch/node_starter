@@ -14,12 +14,13 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { authHttpServiceFactory } from "./auth.module";
 
-const ROUTES = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: UserinfoComponent
-  }
+
+import { AuthGuard } from './auth.guard';
+import { AuthService } from "./auth.service";
+
+export const ROUTES = [
+  { path: '', pathMatch: 'full', component: UserinfoComponent, canActivate: [AuthGuard] },
+
 ];
 
 @NgModule({
@@ -34,6 +35,8 @@ const ROUTES = [
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
+    AuthGuard,
+    AuthService,
     UserinfoService,
     CookieService,
     {
