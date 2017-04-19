@@ -2,6 +2,9 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
 module.exports = function (app) {
+    var config = app.get('config');
+    var maxAge = config.sessionExpirationDays * 24 * 60 * 60 * 1000;
+
     app.set('sessionStore', new RedisStore({
             url: app.get('redisUrl'),
             disableTTL: true,
@@ -16,7 +19,7 @@ module.exports = function (app) {
         cookie: {
             path: '/',
             httpOnly: true,
-            maxAge: 7 * 24 * 60 * 60 * 1000,
+            maxAge: maxAge,
             signed: false
         },
         resave: false,

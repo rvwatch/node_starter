@@ -31,7 +31,7 @@ module.exports = function (app, passport) {
         function(req, res) {
             log.debug("login success");
             var date = new Date();
-            date.setDate(date.getDate() + 7);
+            date.setDate(date.getDate() + config.sessionExpirationDays);
             res.cookie("jwt_token", req.session.jwtToken, { expires: date });
             res.redirect('/profile');
         }
