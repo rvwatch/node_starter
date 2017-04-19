@@ -11,8 +11,7 @@ module.exports = function (app, passport) {
         }
         req.flash('info', "You need to log in to do that.");
 
-        //TODO should properly handle REST request here
-        res.json("");
+        res.status(404).json();
     }
 
     app.get('/api/v1/user/:email',

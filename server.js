@@ -10,6 +10,8 @@ var session = require('express-session');
 var multer = require('multer');
 var serveFavicon = require('serve-favicon');
 
+const cors = require('cors');
+
 //initialize express
 var app = express();
 app.set('env', process.env.NODE_ENV || 'development');
@@ -21,6 +23,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(flash());
+app.use(cors());
 
 //set up log4j
 var log4js = require('log4js');
