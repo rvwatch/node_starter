@@ -44,6 +44,9 @@ app.use(morgan("combined", {
 //initialize db connection strings only
 require('./server/dbconfig.js')(app);
 
+//initialize JWT
+require('./server/jwtconfig.js')(app);
+
 //set up passport
 require('./server/passport.js')(app, passport);
 app.use(session(require('./server/sessions.js')(app)));

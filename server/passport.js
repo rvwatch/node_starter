@@ -2,10 +2,15 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt");
 var bodyParser = require('body-parser');
 
+var _ = require("lodash");
+var jwt = require('jsonwebtoken');
+var passportJWT = require("passport-jwt");
+var JwtStrategy = passportJWT.Strategy;
+
 module.exports = function (app, passport) {
     var pool = app.get('pool');
     var log = app.get('logger');
-
+    var config = app.get('config');
     var models = require('./models/')(app);
 
     passport.serializeUser(function (user, done) {
@@ -42,6 +47,11 @@ module.exports = function (app, passport) {
                     bcrypt.compare(password, user.password).then(function (res) {
                         if (res) {
                             log.info(`${user.name} (${user.id}) logged in.`);
+
+                            req.session.jwtToken = jwt.sign({id: user.id}, config.jwtSecret);
+
+                            log.debug(`jwt token: ${req.session.jwtToken}`);
+
                             return done(null, user);
                         }
                         else {
@@ -87,5 +97,23 @@ module.exports = function (app, passport) {
                         });
                 }
             });
+    }));
+
+    passport.use(new JwtStrategy(app.get("jwtOptions"), function(jwt_payload, next) {
+        log.debug('payload received', jwt_payload);
+
+        models.User.findOne({
+            where: {
+                id:jwt_payload.id
+            }
+        }).then(function (user) {
+            if (!user) {
+                log.debug(`jwt failed for user: ${user}`);
+                next(null, false);
+            } else {
+                log.debug(`jwt success for user: ${user}`);
+                next(null, user);
+            }
+        });
     }));
 };
