@@ -8,6 +8,11 @@ import { AppComponent } from './app.component';
 import { UserinfoComponent } from './userinfo/userinfo.component';
 import { UserinfoService } from "./userinfo.service";
 
+import { Http, RequestOptions } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
 const ROUTES = [
   {
     path: '',
@@ -20,6 +25,15 @@ const ROUTES = [
   }
 ];
 
+export function authHttpServiceFactory(http: Http, options: RequestOptions, cookies: CookieService) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: "JWT ",
+    tokenName: 'token',
+    tokenGetter: (() => cookies.get('jwt_token')),
+    globalHeaders: [{'Content-Type':'application/json'}],
+  }), http, options);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +45,14 @@ const ROUTES = [
     HttpModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [UserinfoService],
+  providers: [
+    UserinfoService,
+    CookieService,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions, CookieService]
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
