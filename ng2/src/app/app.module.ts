@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { UserinfoComponent } from './userinfo/userinfo.component';
-import {UserinfoService} from "./userinfo.service";
+import { UserinfoService } from "./userinfo.service";
 
 const ROUTES = [
   {

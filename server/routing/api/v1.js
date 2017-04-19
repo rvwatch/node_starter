@@ -5,19 +5,32 @@ module.exports = function (app, passport) {
     var config = app.get('config');
     var models = require('../../models/')(app);
 
-    app.get('/api/v1/user/:email', function (req, res) {
+    function userMatches(req, res, next) {
+        if (req.isAuthenticated() && req.params.email == req.user.email) {
+            return next();
+        }
+        req.flash('info', "You need to log in to do that.");
 
-        models.User.findOne({
-            where: {
-                email: req.params.email
-            }
-        }).then(function (user) {
-            if (!user) {
-                res.send("not found");
-            }
+        //TODO should properly handle REST request here
+        res.json("");
+    }
 
-            res.json(user.sanitize());
-        });
-    });
+    app.get('/api/v1/user/:email',
+        userMatches,
+        function (req, res) {
+            models.User.findOne({
+                where: {
+                    email: req.params.email
+                }
+            }).then(function (user) {
+                if (!user) {
+                    //you better not have gotten here!
+                    res.json("");
+                }
+
+                res.json(user.sanitize());
+            });
+        }
+    );
 
 };
