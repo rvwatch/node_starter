@@ -12,27 +12,15 @@ import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { authHttpServiceFactory } from "./auth.module";
 
 const ROUTES = [
   {
     path: '',
-    redirectTo: 'userinfo',
-    pathMatch: 'full'
-  },
-  {
-    path: 'userinfo',
+    pathMatch: 'full',
     component: UserinfoComponent
   }
 ];
-
-export function authHttpServiceFactory(http: Http, options: RequestOptions, cookies: CookieService) {
-  return new AuthHttp(new AuthConfig({
-    headerPrefix: "JWT ",
-    tokenName: 'token',
-    tokenGetter: (() => cookies.get('jwt_token')),
-    globalHeaders: [{'Content-Type':'application/json'}],
-  }), http, options);
-}
 
 @NgModule({
   declarations: [
