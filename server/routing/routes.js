@@ -40,6 +40,7 @@ module.exports = function (app, passport) {
     app.get('/logout',
         function (req, res) {
             res.cookie("sid", "", {expires: new Date(1)});
+            res.cookie("jwt_token", "", {expires: new Date(1)});
             app.get('sessionStore').destroy(req.sessionID);
             req.logout();
 

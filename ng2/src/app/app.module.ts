@@ -16,6 +16,8 @@ import {authHttpServiceFactory} from "./auth.module";
 import {AuthGuard} from "./auth.guard";
 import {AuthService} from "./auth.service";
 
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
 export const ROUTES = [
   {path: '', pathMatch: 'full', component: UserinfoComponent, canActivate: [AuthGuard]},
 
@@ -30,7 +32,8 @@ export const ROUTES = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    ButtonsModule.forRoot()
   ],
   providers: [
     AuthGuard,

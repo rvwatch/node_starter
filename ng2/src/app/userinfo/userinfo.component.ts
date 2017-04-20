@@ -12,6 +12,8 @@ export class UserinfoComponent implements OnInit {
   user: any = [];
   token: any = [];
 
+  public singleModel: string = '1';
+
   constructor(private userInfoService: UserinfoService, private cs: CookieService) {
   }
 
