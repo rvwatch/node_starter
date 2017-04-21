@@ -7,7 +7,9 @@ module.exports = function (sequelize, DataTypes) {
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         resetToken: DataTypes.STRING,
-        resetTokenExpires: DataTypes.DATE
+        resetTokenExpires: DataTypes.DATE,
+        confirmToken: DataTypes.STRING,
+        confirmed: DataTypes.BOOLEAN
     }, {
         instanceMethods: {
             validPassword: function (password) {
@@ -19,6 +21,7 @@ module.exports = function (sequelize, DataTypes) {
                 delete data.password;
                 delete data.resetToken;
                 delete data.resetTokenExpires;
+                delete data.confirmToken;
                 return data;
             }
         },

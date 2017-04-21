@@ -1,6 +1,8 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt");
-var bodyParser = require('body-parser');
+var async = require('async');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
 
 var _ = require("lodash");
 var jwt = require('jsonwebtoken');
@@ -12,6 +14,7 @@ module.exports = function (app, passport) {
     var log = app.get('logger');
     var config = app.get('config');
     var models = require('./models/')(app);
+    var mailer = require('./util/mailer')(app);
 
     passport.serializeUser(function (user, done) {
         log.debug(`serialize user: ${user.id}`)
@@ -87,18 +90,69 @@ module.exports = function (app, passport) {
                 if (user) {
                     return done(null, false, req.flash('error', 'That email is already taken.'));
                 } else {
-                    models.User
-                        .findOrCreate({
-                            where: {
-                                name: req.body.name,
-                                email: email,
-                                password: models.User.hash(password)
-                            }
-                        })
-                        .spread(function (user, created) {
-                            log.info(`${email} registered`);
-                            done(null, user);
-                        });
+                    async.waterfall([
+                        function (done) {
+                            crypto.randomBytes(36, function (err, buf) {
+                                var token = buf.toString('hex');
+                                done(err, token);
+                            });
+                        },
+                        function (token, done) {
+                            models.User
+                                .findOrCreate({
+                                    where: {
+                                        name: req.body.name,
+                                        email: email,
+                                        password: models.User.hash(password),
+                                        confirmToken: token
+                                    }
+                                })
+                                .spread(function(user, created) {
+                                    if (!user) {
+                                        done("Error creating user in DB");
+                                    } else {
+                                        done(null, token, user);
+                                    }
+                                });
+                        },
+                        function (token, user, done) {
+                            var confirmLink = config.mail.fromDomain + '/confirm/' + token;
+
+                            var mailOptions = {
+                                to: email,
+                                from: config.mail.fromAddress,
+                                subject: config.mail.confirm.subject,
+                                confirmLink: confirmLink,
+                                text: 'Use this link to confirm your email address: ' + confirmLink
+                            };
+
+                            mailer.sendMail({
+                                mailOptions
+                            }, (err, info) => {
+                                log.debug(`Sending ${info.messageId} to ${email}`);
+                                log.debug(`Confirm link: ${mailOptions.confirmLink}`);
+                                log.debug(info.message.toString());
+                                req.flash('info', 'Thanks for Registering!  Please check your email and click the link to confirm your address.');
+                                done(err, user);
+                            });
+                        },
+                        function(user, done) {
+                            req.logIn(user, function(err) {
+                                if (err) {
+                                    done(err);
+                                }
+                            });
+                            req.session.jwtToken = jwt.sign({id: user.id}, config.jwtSecret);
+                            done(null);
+                        }
+                    ], function (err) {
+                        if (err) {
+                            log.warn(`Caught error registering user: ${err}`);
+                            req.flash("Sorry, we couldn't handle that!  Please log in again.");
+                        }
+
+                        return done(err);
+                    });
                 }
             });
         }));

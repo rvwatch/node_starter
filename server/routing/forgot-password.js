@@ -46,11 +46,11 @@ module.exports = function (app, passport) {
                 });
             },
             function (token, user, done) {
-                var resetLink = config.mail.reset.fromDomain + '/reset/' + token;
+                var resetLink = config.mail.fromDomain + '/reset/' + token;
 
                 var mailOptions = {
                     to: user.email,
-                    from: config.mail.reset.fromAddress,
+                    from: config.mail.fromAddress,
                     subject: config.mail.reset.subject,
                     resetLink: resetLink,
                     text: 'Use this link to reset your password: ' + resetLink
@@ -70,8 +70,9 @@ module.exports = function (app, passport) {
             if (err) {
                 log.warn(`Caught error in forgot password: ${err}`);
                 return next(err);
+            } else {
+                res.redirect('/forgot');
             }
-            res.redirect('/forgot');
         });
     });
 
@@ -124,10 +125,13 @@ module.exports = function (app, passport) {
                 };
                 mailer.sendMail(mailOptions, function (err) {
                     req.flash('info', 'Success! Your password has been changed.  Please log in again!');
-                    done(err);
+                    done(null);
                 });
             }
         ], function (err) {
+            if(err) {
+                log.error(`Error resetting password ${err}`);
+            }
             res.redirect('/');
         });
     });
