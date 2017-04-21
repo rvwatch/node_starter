@@ -10,7 +10,7 @@ var JwtStrategy = passportJWT.Strategy;
 
 module.exports = function (app, passport) {
     var pool = app.get('pool');
-    var log = app.get('logger');
+    var log = app.get('log').getLogger("[passport]");
     var config = app.get('config');
     var models = require('./models/')(app);
     var mailer = require('./util/mailer')(app);

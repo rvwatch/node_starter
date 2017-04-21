@@ -28,15 +28,15 @@ app.use(cors());
 //set up log4j
 var log4js = require('log4js');
 log4js.configure({appenders: [{type: 'console'}, ], replaceConsole: true});
-app.set('logger', log4js.getLogger());
-app.get('logger').info("log4js configured");
+app.set('log', log4js);
+app.get('log').getLogger("[server]").info("log4js configured");
 
 //redirect morgan to log4js.debug
 var morgan = require('morgan');
 app.use(morgan("combined", {
     "stream": {
         write: function (str) {
-            app.get('logger').debug(str);
+            app.get('log').getLogger("[morgan]").debug(str);
         }
     }
 }));

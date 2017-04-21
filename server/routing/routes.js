@@ -2,7 +2,7 @@ var express = require('express');
 
 module.exports = function (app, passport) {
 
-    var log = app.get('logger');
+    var log = app.get('log').getLogger("[routes]");
     var config = app.get('config');
     var models = require('../models/')(app);
 

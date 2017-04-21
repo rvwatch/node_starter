@@ -5,7 +5,7 @@ var nodemailer = require('nodemailer');
 
 module.exports = function (app, passport) {
 
-    var log = app.get('logger');
+    var log = app.get('log').getLogger("[forgot-password]");
     var config = app.get('config');
     var models = require('../models/')(app);
     var mailer = require('../util/mailer')(app);

@@ -9,7 +9,7 @@ module.exports = function (app) {
         url: app.get('redisUrl'),
         disableTTL: true,
         logErrors: function (str) {
-            app.get('logger').error(str);
+            var log = app.get('log').getLogger("[sessions]").error(str);
         }
     }));
 

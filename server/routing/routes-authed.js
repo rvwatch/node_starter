@@ -2,7 +2,7 @@ var path = require('path');
 
 //TODO should change to router to avoid 'isLoggedIn' call in every chain
 module.exports = function (app) {
-    var log = app.get('logger');
+    var log = app.get('log').getLogger("[routes-authed]");
 
     var config = app.get('config');
 
