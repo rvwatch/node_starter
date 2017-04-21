@@ -6,6 +6,17 @@ module.exports = function (app, passport) {
     var config = app.get('config');
     var models = require('../models/')(app);
 
+    function setCookies(req, res, next) {
+        if (req.isAuthenticated()) {
+            if (!req.cookies.jwt_token) {
+                var date = new Date();
+                date.setDate(date.getDate() + config.sessionExpirationDays);
+                res.cookie("jwt_token", req.session.jwtToken, {expires: date});
+            }
+        }
+        return next();
+    }
+
     function redirectIfAuthed(req, res, next) {
         if (req.isAuthenticated()) {
             res.redirect('/profile');
@@ -16,6 +27,7 @@ module.exports = function (app, passport) {
     }
 
     app.get('/login',
+        setCookies,
         redirectIfAuthed,
         function (req, res) {
             res.render('login');
@@ -29,9 +41,6 @@ module.exports = function (app, passport) {
         }),
         function (req, res) {
             log.debug("login success");
-            var date = new Date();
-            date.setDate(date.getDate() + config.sessionExpirationDays);
-            res.cookie("jwt_token", req.session.jwtToken, {expires: date});
             res.redirect('/profile');
         }
     );
@@ -50,6 +59,7 @@ module.exports = function (app, passport) {
     );
 
     app.get('/signup',
+        setCookies,
         redirectIfAuthed,
         function (req, res) {
             res.render('signup');
@@ -62,8 +72,10 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
-    app.get('/', function (req, res) {
-        res.render('index', {req: req});
+    app.get('/',
+        setCookies,
+        function (req, res) {
+            res.render('index');
     });
 
 };
