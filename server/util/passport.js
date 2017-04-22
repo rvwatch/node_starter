@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt");
 var async = require('async');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
-var BillingUtil = require('../util/billing.js');
+var BillingUtil = require('./billing.js');
 
 var jwt = require('jsonwebtoken');
 var passportJWT = require("passport-jwt");

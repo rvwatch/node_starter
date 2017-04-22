@@ -10,7 +10,8 @@ module.exports = function (sequelize, DataTypes) {
         resetTokenExpires: DataTypes.DATE,
         confirmToken: DataTypes.STRING,
         confirmed: DataTypes.BOOLEAN,
-        subscription: DataTypes.INTEGER
+        subscription: DataTypes.INTEGER,
+        billingCustomerId: DataTypes.STRING
     }, {
         instanceMethods: {
             validPassword: function (password) {
