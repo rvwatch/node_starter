@@ -3,6 +3,7 @@ var bcrypt = require("bcrypt");
 var async = require('async');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+var BillingUtil = require('../util/billing.js');
 
 var jwt = require('jsonwebtoken');
 var passportJWT = require("passport-jwt");
@@ -10,10 +11,11 @@ var JwtStrategy = passportJWT.Strategy;
 
 module.exports = function (app, passport) {
     var pool = app.get('pool');
-    var log = app.get('log').getLogger("[passport]");
+    var log = app.get('log').getLogger("[util/passport]");
     var config = app.get('config');
-    var models = require('./models/')(app);
-    var mailer = require('./util/mailer')(app);
+    var models = require('../models/')(app);
+    var mailer = require('./mailer')(app);
+    var billing = new BillingUtil(app);
 
     passport.serializeUser(function (user, done) {
         log.debug(`serialize user: ${user.id}`)

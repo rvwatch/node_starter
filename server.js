@@ -48,7 +48,7 @@ require('./server/dbconfig.js')(app);
 require('./server/jwtconfig.js')(app);
 
 //set up passport
-require('./server/passport.js')(app, passport);
+require('./server/util/passport.js')(app, passport);
 app.use(session(require('./server/sessions.js')(app)));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -68,6 +68,7 @@ app.use(function(req, res, next) {
 //routing
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/confirm-email.js')(app, passport);
+require('./server/routing/routes-billing.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
 require('./server/routing/routes.js')(app, passport);
 require('./server/routing/api/v1.js')(app, passport);
