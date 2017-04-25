@@ -19,13 +19,22 @@ module.exports = {
                   type: Sequelize.STRING,
                   allowNull: true
               }
+          ),
+          queryInterface.addColumn(
+              'Users',
+              'billingSubscriptionId',
+              {
+                  type: Sequelize.STRING,
+                  allowNull: true
+              }
           )
       ];
   },
   down: function (queryInterface, Sequelize) {
       return [
           queryInterface.removeColumn('Users', 'subscription'),
-          queryInterface.removeColumn('Users', 'billingCustomerId')
+          queryInterface.removeColumn('Users', 'billingCustomerId'),
+          queryInterface.removeColumn('Users', 'billingSubscriptionId')
       ];
   }
 };

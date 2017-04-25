@@ -42,7 +42,7 @@ module.exports = function (app, passport) {
                         return res.redirect('/forgot');
                     })
 
-                    done(null, token, user);
+                    done(err, token, user);
                 });
             },
             function (token, user, done) {
