@@ -90,6 +90,7 @@ module.exports = function (app, passport) {
 
                         req.user.billingCustomerId = customer.id;
                         req.user.billingSubscriptionId = customer.subscriptions.data[0].id;
+                        req.user.subscription = req.params.planId;
 
                         req.user.save()
                             .then(function (user) {
