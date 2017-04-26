@@ -63,7 +63,7 @@ describe("basic tests", function () {
     it("should redirect to home on logout if logged in", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1234'})
+            .send({email: 'dev@rickdarlington.com', password: '1234'})
             .expect(302)
             .catch(function (err) {
                 if (err) {
@@ -89,7 +89,7 @@ describe("basic tests", function () {
     it("should login and redirect to /profile with correct credentials", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1234'})
+            .send({email: 'dev@rickdarlington.com', password: '1234'})
             .expect(302)
             .end(function (err, res) {
                 if (err) {
@@ -105,7 +105,7 @@ describe("basic tests", function () {
     it("should not login and redirect to /login with incorrect credentials", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1111'})
+            .send({email: 'dev@rickdarlington.com', password: '1111'})
             .expect(302)
             .end(function (err, res) {
                 if (err) {
@@ -121,7 +121,7 @@ describe("basic tests", function () {
     it("should login and redirect to /profile with correct credentials", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1234'})
+            .send({email: 'dev@rickdarlington.com', password: '1234'})
             .expect(302)
             .end(function (err, res) {
                 if (err) {
@@ -137,7 +137,7 @@ describe("basic tests", function () {
     it("should redirect to profile when hitting login if already logged in", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1234'})
+            .send({email: 'dev@rickdarlington.com', password: '1234'})
             .expect(302)
             .catch(function (err) {
                 if (err) {
@@ -163,7 +163,7 @@ describe("basic tests", function () {
     it("should redirect to profile when hitting signup if already logged in", function (done) {
         server
             .post("/login")
-            .send({email: 'dev@', password: '1234'})
+            .send({email: 'dev@rickdarlington.com', password: '1234'})
             .expect(302)
             .catch(function (err) {
                 if (err) {
