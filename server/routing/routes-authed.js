@@ -1,6 +1,5 @@
 var path = require('path');
 
-//TODO should change to router to avoid 'isLoggedIn' call in every chain
 module.exports = function (app) {
     var log = app.get('log').getLogger("[routes-authed]");
 
@@ -20,8 +19,18 @@ module.exports = function (app) {
         res.redirect('/');
     }
 
+    function redirectNoPlan(req, res, next) {
+        if(req.user.billingSubscriptionId == null) {
+            res.redirect("/pickaplan");
+        }
+        else {
+            return next();
+        }
+    }
+
     app.get('/profile',
         isLoggedIn,
+        redirectNoPlan,
         function (req, res) {
             res.render('profile', {
                 user: req.user

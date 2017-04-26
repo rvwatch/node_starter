@@ -7,17 +7,17 @@ module.exports = {
             queryInterface.bulkInsert('Users',
                 [{
                     name: "admin",
-                    email: "admin@",
+                    email: "admin@admin.io",
                     role: "admin",
                     billingCustomerId: "cus_AY0NPf8GsVLZMg",
-                    billingSubscriptionId: "",
+                    billingSubscriptionId: "sub_AY0h7he0tR8F3Z",
                     password: bcrypt.hashSync("4321", bcrypt.genSaltSync(8), null),
                     createdAt: new Date(),
                     updatedAt: new Date()
                 },
                 {
                     name: "dev",
-                    email: "dev@",
+                    email: "dev@dev.io",
                     role: "user",
                     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(8), null),
                     createdAt: new Date(),

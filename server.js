@@ -68,6 +68,7 @@ app.use(function(req, res, next) {
 //routing
 require('./server/routing/forgot-password.js')(app, passport);
 require('./server/routing/confirm-email.js')(app, passport);
+require('./server/routing/routes-billing.js')(app, passport);
 require('./server/routing/routes-authed.js')(app, passport);
 require('./server/routing/routes.js')(app, passport);
 require('./server/routing/api/v1.js')(app, passport);

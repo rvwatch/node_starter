@@ -11,7 +11,8 @@ module.exports = function (sequelize, DataTypes) {
         confirmToken: DataTypes.STRING,
         confirmed: DataTypes.BOOLEAN,
         subscription: DataTypes.INTEGER,
-        billingCustomerId: DataTypes.STRING
+        billingCustomerId: DataTypes.STRING,
+        billingSubscriptionId: DataTypes.STRING
     }, {
         instanceMethods: {
             validPassword: function (password) {

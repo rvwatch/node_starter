@@ -1,0 +1,35 @@
+<%- include('partials/header'); %>
+pick a plan:
+<br/><br />
+<form action="/billing/plans/<%= config.stripe.plans.monthly %>/subscribe" method="POST">
+    <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= config.stripe.public %>"
+            data-email="<%= req.user.email %>"
+            data-zip-code="true"
+            data-name="Node Starter"
+            data-description="Monthly Subscription"
+            data-allow-remember-me="false"
+            data-amount="400"
+            data-label="Pay Monthly">
+    </script>
+</form>
+<br />
+<form action="/billing/plans/<%= config.stripe.plans.yearly %>/subscribe" method="POST">
+    <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= config.stripe.public %>"
+            data-email="<%= req.user.email %>"
+            data-zip-code="true"
+            data-name="Node Starter"
+            data-description="Yearly Subscription"
+            data-allow-remember-me="false"
+            data-amount="4000"
+            data-label="Pay Yearly">
+    </script>
+</form>
+<br /><br />
+<a href="/">home</a>
+<br/>
+<a href="/logout">log out</a>
+<%- include('partials/footer'); %>
