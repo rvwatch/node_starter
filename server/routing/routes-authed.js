@@ -28,9 +28,18 @@ module.exports = function (app) {
         }
     }
 
+    function confirmEmailPrompt(req, res, next) {
+        log.trace("confirmed: " + req.user.confirmed);
+        if(!req.user.confirmed) {
+            req.flash('info',"Please check your email and click the link to confirm your address.");
+        }
+        return next();
+    }
+
     app.get('/profile',
         isLoggedIn,
         redirectNoPlan,
+        confirmEmailPrompt,
         function (req, res) {
             res.render('profile', {
                 user: req.user

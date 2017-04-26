@@ -7,6 +7,13 @@ module.exports = function (app, passport) {
     var config = app.get('config');
     var stripe = require('stripe')(config.stripe.secret);
 
+    function confirmEmailPrompt(req, res, next) {
+        if(!req.user.confirmed) {
+            req.flash('info', "Please check your email and click the link to confirm your address.");
+        }
+        return next();
+    }
+
     function authorized(req, res, next) {
         if (req.isAuthenticated()) {
             return next();
@@ -47,6 +54,7 @@ module.exports = function (app, passport) {
 
     app.get('/pickaplan',
         authorized,
+        confirmEmailPrompt,
         redirectHasPlan,
         function (req, res) {
             res.render('pickaplan', {

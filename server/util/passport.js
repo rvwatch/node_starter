@@ -131,7 +131,7 @@ module.exports = function (app, passport) {
                                 log.debug(`Sending ${info.messageId} to ${email}`);
                                 log.debug(`Confirm link: ${mailOptions.confirmLink}`);
                                 log.debug(info.message.toString());
-                                req.flash('info', 'Thanks for Registering!  Please check your email and click the link to confirm your address.');
+                                req.flash('info', 'Thanks for Registering!');
                                 done(err, user);
                             });
                         },
