@@ -9,6 +9,6 @@ export class UserinfoService {
   }
 
   getUserInfo() {
-    return this.http.get('/api/v1/user/dev@rickdarlington.com').map(res => res.json());
+    return this.http.get('/api/v1/user/confirmed@rickdarlington.com').map(res => res.json());
   }
 }

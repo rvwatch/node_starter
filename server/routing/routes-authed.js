@@ -20,7 +20,11 @@ module.exports = function (app) {
     }
 
     function redirectNoPlan(req, res, next) {
-        if(req.user.billingSubscriptionId == null) {
+        log.trace(req.user.billingEndedAt);
+        log.trace(new Date().getTime());
+
+        if(req.user.billingSubscriptionId == null ||
+            (req.user.billingEndedAt != null && req.user.billingEndedAt < new Date().getTime())) {
             res.redirect("/pickaplan");
         }
         else {

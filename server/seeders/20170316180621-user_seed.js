@@ -43,6 +43,8 @@ module.exports = {
                     role: "user",
                     subscription: 0,
                     confirmed: false,
+                    billingCustomerId: "cus_expired",
+                    billingSubscriptionId: "sub_expired",
                     billingPeriodEnd: expired.getTime(),
                     billingEndedAt: expired.getTime(),
                     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(8), null),

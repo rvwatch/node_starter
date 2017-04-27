@@ -44,7 +44,8 @@ module.exports = function (app, passport) {
     }
 
     function redirectHasPlan(req, res, next) {
-        if (req.user.billingSubscriptionId != null) {
+        if ((req.user.billingSubscriptionId != null && req.user.billingEndedAt == null)
+            || req.user.billingEndedAt > new Date().getTime()) {
             res.redirect("/profile");
         }
         else {
@@ -72,6 +73,7 @@ module.exports = function (app, passport) {
             if (req.user.billingCustomerId != null && req.user.billingSubscriptionId != null) {
                 log.warn(`Customer ${req.user.email} already has a stripe customerId`);
                 req.flash('info', 'Thanks, but you already have a subscription!');
+                //TODO handle if subscription lapsed and they want to re-up
                 res.redirect("/profile");
             } else {
                 stripe.customers.create(
