@@ -12,7 +12,9 @@ module.exports = function (sequelize, DataTypes) {
         confirmed: DataTypes.BOOLEAN,
         subscription: DataTypes.INTEGER,
         billingCustomerId: DataTypes.STRING,
-        billingSubscriptionId: DataTypes.STRING
+        billingSubscriptionId: DataTypes.STRING,
+        billingPeriodEnd: DataTypes.INTEGER,
+        billingEndedAt: DataTypes.INTEGER
     }, {
         instanceMethods: {
             validPassword: function (password) {

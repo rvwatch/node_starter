@@ -89,7 +89,10 @@ module.exports = function (app, passport) {
                         log.info(`Billing customer (${req.user.email}) created in Stripe`);
 
                         req.user.billingCustomerId = customer.id;
-                        req.user.billingSubscriptionId = customer.subscriptions.data[0].id;
+                        var sub = customer.subscriptions.data[0];
+                        req.user.billingSubscriptionId = sub.id;
+                        req.user.billingPeriodEnd = sub.current_period_end;
+
                         req.user.subscription = req.params.planId;
 
                         req.user.save()
