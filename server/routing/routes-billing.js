@@ -70,10 +70,10 @@ module.exports = function (app, passport) {
         validPlanId,
         userNotSubscribed,
         function (req, res) {
-            if (req.user.billingCustomerId != null && req.user.billingSubscriptionId != null) {
-                log.warn(`Customer ${req.user.email} already has a stripe customerId`);
+            if ((req.user.billingCustomerId != null && req.user.billingSubscriptionId != null) ||
+                (req.user.billingEndedAt == null || req.user.billingEndedAt > new Date().getTime())) {
+                log.warn(`Customer ${req.user.email} already has a subscription`);
                 req.flash('info', 'Thanks, but you already have a subscription!');
-                //TODO handle if subscription lapsed and they want to re-up
                 res.redirect("/profile");
             } else {
                 stripe.customers.create(
