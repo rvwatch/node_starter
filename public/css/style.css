@@ -1,10 +1,53 @@
-/* it's a thing */
-
-body {
-    padding-top: 50px;
+html,
+body,
+.maincontent {
+    height:90%;
 }
 
-.content {
-    padding: 40px 15px;
-    text-align: left;
+.view {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.flex-center {
+    color: #fff;
+}
+
+#contact .fa {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.navbar {
+    background-color: #1C2331;
+}
+
+
+.top-nav-collapse {
+    background-color: #1C2331;
+}
+
+.maincontent {
+    padding-top:40px;
+}
+
+.notifications {
+    margin-top:90px;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: #1C2331;
+    }
+}
+
+.extra-margins {
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.jumbotron {
+    text-align: center;
 }

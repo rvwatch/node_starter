@@ -1,4 +1,6 @@
 <%- include('partials/header'); %>
+<div class="container maincontent">
+
 <% if(user) { %>
 hi <%= user.name %>!  you're logged in!
 <% } %>
@@ -6,4 +8,6 @@ hi <%= user.name %>!  you're logged in!
 <a href="/">home</a>
 <br/>
 <a href="/logout">log out</a>
+
+</div>
 <%- include('partials/footer'); %>

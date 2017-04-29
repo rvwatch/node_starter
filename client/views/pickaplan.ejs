@@ -1,4 +1,6 @@
 <%- include('partials/header'); %>
+<div class="container maincontent">
+
 pick a plan:
 <br/><br />
 <form action="/billing/plans/<%= config.stripe.plans.monthly %>/subscribe" method="POST">
@@ -32,4 +34,6 @@ pick a plan:
 <a href="/">home</a>
 <br/>
 <a href="/logout">log out</a>
+
+</div>
 <%- include('partials/footer'); %>

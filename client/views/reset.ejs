@@ -1,19 +1,20 @@
 <%- include('partials/header'); %>
+<div class="container maincontent">
 
-<form action="/reset" method="POST">
-    <div class="form-group">
-        <label>New Password:</label>
-        <input type="password" class="form-control" name="newPassword" value=""/>
-    </div>
-    <div class="form-group">
-        <label>Confirm Password:</label>
-        <input type="password" class="form-control" name="confirmPassword" value=""/>
-    </div>
-    <input type="hidden" name="token" value="<%= token %>"/>
-    <button type="submit" class="btn btn-warning btn-lg">Reset Password</button>
+    <form action="/reset" method="POST">
+        <div class="form-group">
+            <label>New Password:</label>
+            <input type="password" class="form-control" name="newPassword" value=""/>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password:</label>
+            <input type="password" class="form-control" name="confirmPassword" value=""/>
+        </div>
+        <input type="hidden" name="token" value="<%= token %>"/>
+        <button type="submit" class="btn btn-warning btn-lg">Reset Password</button>
 
-</form>
-
+    </form>
+</div>
 <br/>
 <a href="/">home</a>
 <%- include('partials/footer'); %>

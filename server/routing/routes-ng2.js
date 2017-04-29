@@ -7,7 +7,7 @@ module.exports = function (app, passport) {
             return next();
         }
         req.flash('info', "You need to log in to do that.");
-        res.redirect('/');
+        res.redirect('/login');
     }
 
     //moved to routes-authed

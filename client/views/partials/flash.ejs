@@ -1,6 +1,16 @@
 <% if (messages.info) { %>
-<div class="alert alert-info"><%= messages.info %></div>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <%= messages.info %>
+</div>
 <% } %>
 <% if (messages.error) { %>
-<div class="alert alert-error"><%= messages.error %></div>
+<div class="alert alert-error alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <%= messages.error %>
+</div>
 <% } %>
