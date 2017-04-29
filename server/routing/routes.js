@@ -54,7 +54,7 @@ module.exports = function (app, passport) {
 
             //don't just redirect here, causes cookie to not get cleared
             req.flash('info', "You've logged out.");
-            res.render('index');
+            res.render('login');
         }
     );
 

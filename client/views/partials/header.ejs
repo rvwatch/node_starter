@@ -23,10 +23,11 @@
 
 <!--Navbar-->
 <nav class="navbar navbar-toggleable-md navbar-dark fixed-top scrolling-navbar">
-    <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#toggleContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <a class="navbar-brand" href="/">
             <strong>Node Starter</strong>
         </a>
@@ -37,8 +38,7 @@
                 </li>
             </ul>
 
-            <!--Social Icons-->
-            <ul class="navbar-nav nav-flex-icons">
+            <ul class="collapse navbar-nav nav-flex-icons">
                 <% if(req.isAuthenticated()) { %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +56,27 @@
                 <% } %>
             </ul>
         </div>
-    </div>
+
+        <div class="collapse" id="toggleContent">
+            <ul class="nav navbar-nav navbar-right navbar-right-large">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">About</a>
+                </li>
+                <% if(req.isAuthenticated()) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Log In</a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+
 </nav>
 <div class="notifications container-fluid">
     <div class="row">
