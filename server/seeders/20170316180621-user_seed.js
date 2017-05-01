@@ -1,8 +1,11 @@
 'use strict';
 var bcrypt = require("bcrypt");
 
-var dt = new Date();
-dt.setDate(dt.getDate() + 30);
+var aMonth = new Date();
+aMonth.setDate(aMonth.getDate() + 30);
+
+var aYear = new Date();
+aYear.setDate(aYear.getDate() + 365);
 
 var expired = new Date();
 expired.setDate(expired.getDate() - 1);
@@ -19,7 +22,7 @@ module.exports = {
                     billingSubscriptionId: "sub_AY3UDoQQL1p8VV",
                     subscription: 3,
                     confirmed: true,
-                    billingPeriodEnd: dt.getTime(),
+                    billingPeriodEnd: aYear.getTime()/1000,
                     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(8), null),
                     createdAt: new Date(),
                     updatedAt: new Date()
@@ -32,7 +35,7 @@ module.exports = {
                     billingSubscriptionId: "sub_confirmed",
                     subscription: 0,
                     confirmed: true,
-                    billingPeriodEnd: dt.getTime(),
+                    billingPeriodEnd: aMonth.getTime()/1000,
                     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(8), null),
                     createdAt: new Date(),
                     updatedAt: new Date()
@@ -45,8 +48,8 @@ module.exports = {
                     confirmed: false,
                     billingCustomerId: "cus_expired",
                     billingSubscriptionId: "sub_expired",
-                    billingPeriodEnd: expired.getTime(),
-                    billingEndedAt: expired.getTime(),
+                    billingPeriodEnd: expired.getTime()/1000,
+                    billingEndedAt: expired.getTime()/1000,
                     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(8), null),
                     createdAt: new Date(),
                     updatedAt: new Date()

@@ -28,6 +28,34 @@ module.exports = function (sequelize, DataTypes) {
                 delete data.resetTokenExpires;
                 delete data.confirmToken;
                 return data;
+            },
+            planStatus: function() {
+                var planEnd = this.get().billingEndedAt;
+                var planStatus = 'Active';
+                if(planEnd != null) {
+                    if(planEnd > new Date().getTime()) {
+                        planStatus = 'Canceling';
+                    }
+                    else {
+                        planStatus = 'Cancelled';
+                    }
+                }
+                return planStatus;
+            },
+            planType: function() {
+                var planType = "NONE";
+                switch(this.get().subscription) {
+                    case 1:
+                        planType = "MONTHLY";
+                        break;
+                    case 2:
+                        planType = "YEARLY";
+                        break;
+                    case 3:
+                        planType = "COMP";
+                        break;
+                }
+                return planType;
             }
         },
         classMethods: {

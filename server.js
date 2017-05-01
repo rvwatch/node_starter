@@ -18,6 +18,7 @@ app.set('env', process.env.NODE_ENV || 'development');
 app.set('config', require(__dirname + '/server/config.json')[app.get('env')]);
 app.set('views', './client/views');
 app.set('view engine', 'ejs');
+app.set('json spaces', 2);
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));

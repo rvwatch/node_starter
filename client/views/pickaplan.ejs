@@ -1,39 +1,88 @@
 <%- include('partials/header'); %>
 <div class="container maincontent">
-
-pick a plan:
-<br/><br />
-<form action="/billing/plans/<%= config.stripe.plans.monthly %>/subscribe" method="POST">
-    <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= config.stripe.public %>"
-            data-email="<%= req.user.email %>"
-            data-zip-code="true"
-            data-name="Node Starter"
-            data-description="Monthly Subscription"
-            data-allow-remember-me="false"
-            data-amount="400"
-            data-label="Pay Monthly">
-    </script>
-</form>
-<br />
-<form action="/billing/plans/<%= config.stripe.plans.yearly %>/subscribe" method="POST">
-    <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= config.stripe.public %>"
-            data-email="<%= req.user.email %>"
-            data-zip-code="true"
-            data-name="Node Starter"
-            data-description="Yearly Subscription"
-            data-allow-remember-me="false"
-            data-amount="4000"
-            data-label="Pay Yearly">
-    </script>
-</form>
-<br /><br />
-<a href="/">home</a>
-<br/>
-<a href="/logout">log out</a>
-
+    <div class="container plan-description">
+        <h2>2 plans, same features, no BS. Just pick monthly or yearly billing.</h2>
+    </div>
+    <div class="container">
+        <!-- Monthly -->
+        <div class="row form-pad">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="form-header btn-git btn-primary">
+                            <h3 class="text-uppercase">Monthly Plan</h3>
+                        </div>
+                        <div class="text-center">
+                            <h2>$5/mo</h2>
+                            <br />
+                        </div>
+                        <div class="text-center">
+                            <ul>
+                                <li>Billed to you monthly.</li>
+                                <li>Less than a (good) coffee.</li>
+                            </ul>
+                        </div>
+                        <div class="text-right">
+                            <form action="/billing/plans/<%= config.stripe.plans.monthly %>/subscribe" method="POST">
+                                <script
+                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="<%= config.stripe.public %>"
+                                        data-email="<%= req.user.email %>"
+                                        data-zip-code="true"
+                                        data-name="Node Starter"
+                                        data-description="Monthly Subscription"
+                                        data-allow-remember-me="false"
+                                        data-amount="400"
+                                        data-label="Pay Monthly">
+                                </script>
+                                <button class="btn btn-primary">Go Monthly</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="form-header btn-git btn-primary">
+                            <h3 class="text-uppercase">Yearly Plan</h3>
+                        </div>
+                        <div class="text-center">
+                            <h2>$50/yr</h2>
+                            <br />
+                        </div>
+                        <div class="text-center">
+                            <ul>
+                                <li>Set it and forget it.</li>
+                                <li>Feels like getting 2 months free!</li>
+                            </ul>
+                        </div>
+                        <div class="text-right">
+                            <form action="/billing/plans/<%= config.stripe.plans.yearly %>/subscribe" method="POST">
+                                <script
+                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="<%= config.stripe.public %>"
+                                        data-email="<%= req.user.email %>"
+                                        data-zip-code="true"
+                                        data-name="Node Starter"
+                                        data-description="Yearly Subscription"
+                                        data-allow-remember-me="false"
+                                        data-amount="4000"
+                                        data-label="Pay Yearly">
+                                </script>
+                                <button class="btn btn-primary">Get a Year NOW</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
 </div>
+<script type="text/javascript">
+    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+    document.getElementsByClassName("stripe-button-el")[1].style.display = 'none';
+</script>
 <%- include('partials/footer'); %>

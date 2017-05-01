@@ -25,7 +25,7 @@ describe("basic tests", function () {
                 if (err) {
                     return done(err);
                 }
-                should(res.headers.location).equal("/");
+                should(res.headers.location).equal("/login");
                 should(res.body.error).equal(undefined);
                 done();
             });

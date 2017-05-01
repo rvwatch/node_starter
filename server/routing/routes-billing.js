@@ -29,7 +29,7 @@ module.exports = function (app, passport) {
         }
         else {
             req.flash('error', "Something went wrong.  Please try again later.");
-            redirect("/profile");
+            res.redirect("/profile");
         }
     }
 
@@ -43,9 +43,19 @@ module.exports = function (app, passport) {
         }
     }
 
+    function userSubscribed(req, res, next) {
+        if (req.user.billingSubscriptionId == null) {
+            req.flash('error', "Something went wrong.  Please try again later.");
+            redirect("/profile");
+        }
+        else {
+            return next();
+        }
+    }
+
     function redirectHasPlan(req, res, next) {
         if ((req.user.billingSubscriptionId != null && req.user.billingEndedAt == null)
-            || req.user.billingEndedAt > new Date().getTime()) {
+            || req.user.billingEndedAt > (new Date().getTime()/1000)) {
             res.redirect("/profile");
         }
         else {
@@ -65,13 +75,47 @@ module.exports = function (app, passport) {
         }
     );
 
+    app.post('/billing/cancel',
+        authorized,
+        userSubscribed,
+        function (req, res) {
+            stripe.subscriptions.del(req.user.billingSubscriptionId,
+                {
+                    at_period_end: true
+                },
+                function(err, confirmation) {
+                    if(err) {
+                        log.error(`Error canceling subscription for ${req.user.email}`);
+                        log.error(err);
+                        req.flash('error',`There was an error canceling your subscription.  Please try again later or email support!`);
+                        res.redirect("/profile");
+                    }
+                    else {
+                        req.user.billingEndedAt = confirmation.current_period_end;
+
+                        req.user.save()
+                            .then(function (user) {
+                                log.info(`${user.email} CANCELLED subscription! :(`);
+                                req.flash('info', `Your plan has been cancelled.  You will still have access until the last day of your billing cycle.`);
+                                res.redirect("/profile");
+                            }).catch(function (err) {
+                            log.error(err);
+                            req.flash('error', "Sorry we had a problem canceling your subscription.  Please try again later or email support.");
+                            res.redirect("/profile");
+                        });
+                    }
+                }
+            );
+        }
+    );
+
     app.post('/billing/plans/:planId/subscribe',
         authorized,
         validPlanId,
         userNotSubscribed,
         function (req, res) {
-            if ((req.user.billingCustomerId != null && req.user.billingSubscriptionId != null) ||
-                (req.user.billingEndedAt == null || req.user.billingEndedAt > new Date().getTime())) {
+            if ((req.user.billingCustomerId != null && req.user.billingSubscriptionId != null && req.user.billingEndedAt == null)
+                || req.user.billingEndedAt > new Date().getTime()) {
                 log.warn(`Customer ${req.user.email} already has a subscription`);
                 req.flash('info', 'Thanks, but you already have a subscription!');
                 res.redirect("/profile");

@@ -2,9 +2,11 @@ html {
     position: relative;
     min-height: 100%;
 }
+
 body {
     margin-bottom: 140px;
 }
+
 footer {
     position: absolute;
     bottom: 0;
@@ -39,14 +41,8 @@ footer {
 }
 
 .notifications {
-    margin-top:75px;
-    margin-bottom:30px;
-}
-
-@media only screen and (max-width: 768px) {
-    .navbar {
-        background-color: #1C2331;
-    }
+    margin-top: 75px;
+    margin-bottom: 30px;
 }
 
 .extra-margins {
@@ -56,4 +52,17 @@ footer {
 
 .jumbotron {
     text-align: center;
+}
+
+.form-pad {
+    padding-top: 15px;
+}
+
+.plan-description {
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.stripe-button-el span {
+    display: none;
 }
