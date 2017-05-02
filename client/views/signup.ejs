@@ -1,6 +1,6 @@
 <%- include('partials/header'); %>
 <div class="container-fluid maincontent">
-    <form action="/signup" method="POST">
+    <form id="signup-form" action="/signup" method="POST">
         <div class="row">
             <div class="col-md-4">&nbsp;</div>
             <div class="col-md-4">
@@ -10,20 +10,20 @@
                             <h3 class="text-uppercase">Sign Up</h3>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="name" name="name" class="form-control">
-                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" data-validation="length" data-validation-length="min2" data-validation-error-msg="Please enter a name">
+                            <label id="name-label" for="name">Name</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="email" name="email" class="form-control">
+                            <input type="text" id="email" name="email" class="form-control" data-validation="email" data-validation-error-msg="Please enter a valid email">
                             <label for="email">Email</label>
                         </div>
                         <div class="md-form">
-                            <input type="password" id="password" name="password" class="form-control">
+                            <input type="password" id="password" name="password" class="form-control" data-validation="required" data-validation-error-msg="Please enter a password">
                             <label for="password">Password</label>
                         </div>
 
                         <div class="text-right">
-                            <button class="btn btn-primary btn-lg">Sign Up</button>
+                            <button id="submit-button" class="btn btn-primary btn-lg">Sign Up</button>
                         </div>
                     </div>
                 </div>
@@ -40,4 +40,13 @@
         </div>
     </form>
 </div>
+<script>
+    $.validate({
+        validateOnBlur : true,
+        errorMessagePosition : 'inline',
+        scrollToTopOnError : false,
+        showHelpOnFocus : false,
+        addSuggestions : false
+    });
+</script>
 <%- include('partials/footer'); %>
