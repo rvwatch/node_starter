@@ -69,16 +69,16 @@ module.exports = function (app, passport) {
         },
         function (req, email, password, done) {
             //validate
-            if (!email) {
-                return done(null, false, req.flash('error', 'Email is required.'));
+            if (!email || email.indexOf("@") < 1) {
+                return done(null, false, req.flash('error', 'A valid email address is required.'));
             }
 
-            if (!password) {
-                return done(null, false, req.flash('error', 'Password is required.'));
+            if (!password || password.length < 4) {
+                return done(null, false, req.flash('error', 'A Password (at least 4 characters) is required.'));
             }
 
-            if (!req.body.name || req.body.name == null || req.body.name == "") {
-                return done(null, false, req.flash('error', 'Name is required.'));
+            if (!req.body.name || req.body.name == null || req.body.name.length < 2) {
+                return done(null, false, req.flash('error', 'Please let us know what to call you by entering a Name.'));
             }
 
             models.User.findOne({

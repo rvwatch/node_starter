@@ -66,3 +66,18 @@ footer {
 .stripe-button-el span {
     display: none;
 }
+
+.form-error {
+    margin-top:-10px;
+    font-size:.8rem;
+    color:#b94a48;
+}
+
+.form-control {
+    padding-bottom:0px;
+    margin-bottom:0px;
+}
+
+.md-form {
+    padding-top:10px;
+}
