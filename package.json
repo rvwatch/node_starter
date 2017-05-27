@@ -4,14 +4,14 @@
   "description": "Starter node project (express, passport, sequelize, etc)",
   "repository": {
     "type": "git",
-    "url": "git@github.com:rickdarlington/node_starter.git"
+    "url": "git@github.com:rvwatch/node_starter.git"
   },
-  "author": "Rick Darlington",
+  "author": "Ricardo Viera",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rickdarlington/node_starter/issues"
+    "url": "https://github.com/rvwatch/node_starter/issues"
   },
-  "homepage": "https://github.com/rickdarlington/node_starter",
+  "homepage": "https://github.com/rvwatch/node_starter",
   "dependencies": {
     "angular2-jwt": "^0.2.2",
     "async": "^2.2.0",
